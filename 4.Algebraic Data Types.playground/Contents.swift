@@ -1,0 +1,188 @@
+import Foundation
+
+struct Pair<A, B> {
+    let first: A
+    let second: B
+}
+
+Pair<Bool, Bool>.init(first: true, second: true)
+Pair<Bool, Bool>.init(first: true, second: false)
+Pair<Bool, Bool>.init(first: false, second: true)
+Pair<Bool, Bool>.init(first: false, second: false)
+
+
+enum Three {
+    case one
+    case two
+    case three
+}
+
+Pair<Bool, Three>.init(first: true, second: .one)
+Pair<Bool, Three>.init(first: true, second: .two)
+Pair<Bool, Three>.init(first: true, second: .three)
+Pair<Bool, Three>.init(first: false, second: .one)
+Pair<Bool, Three>.init(first: false, second: .two)
+Pair<Bool, Three>.init(first: false, second: .three)
+
+let _: Void = Void()
+let _: Void = ()
+let _: () = ()
+
+func foo(_ x: Int) /* -> Void */{
+//    return ()
+}
+
+Pair<Bool, Void>.init(first: true, second: ())
+Pair<Bool, Void>.init(first: false, second: ())
+
+Pair<Void, Void>.init(first: (), second: ())
+
+enum Never {}
+
+//let _: Never = ???
+
+//Pair<Bool, Never>.init(first: true, second: ???)
+
+// Pair<Bool, Bool> = 4 = 2 * 2
+// Pair<Bool, Three> = 6 = 2 * 3
+// Pair<Bool, Void> = 2 = 2 * 1
+// Pair<Void, Void> = 1 = 1 * 1
+// Pair<Bool, Never> = 0 = 2 * 0
+enum Theme {
+    case light
+    case dark
+}
+
+enum State {
+    case highlighted
+    case normal
+    case selected
+}
+
+struct Component {
+    let enabled: Bool
+    let state: State
+    let theme: Theme
+}
+
+// 2 * 3 * 2 = 12
+
+// Pair<A, B> = A * B
+// Pair<Bool, Bool> = Bool * Bool
+// Pair<Bool, Three> = Bool * Three
+// Pair<Bool, Void> = Bool * Void
+// Pair<Bool, Never> = Bool * Never
+
+// Pair<Bool, String> = Bool * String
+// String * [Int]
+// [String] * [[Int]]
+// Never = 0
+// Void = 1
+// Bool = 2
+// 2 * String
+
+enum Either<A, B> {
+    case left(A)
+    case right(B)
+}
+
+Either<Bool,Bool>.left(true)
+Either<Bool,Bool>.left(false)
+Either<Bool,Bool>.right(true)
+Either<Bool,Bool>.right(false)
+// Either<Bool, Bool> = 4 = 2 + 2
+
+Either<Bool, Three>.left(true)
+Either<Bool, Three>.left(false)
+Either<Bool, Three>.right(.one)
+Either<Bool, Three>.right(.two)
+Either<Bool, Three>.right(.three)
+// Either<Bool, Three> = 5 = 2 + 3
+
+Either<Bool, Void>.left(true)
+Either<Bool, Void>.left(false)
+Either<Bool, Void>.right(())
+// Either<Bool, Void> = 4 = 2 + 1
+
+Either<Bool, Never>.left(true)
+Either<Bool, Never>.left(false)
+// Either<Bool, Never>.right(???)
+// Either<Bool, Bool> = 2 = 2 + 0
+
+struct Unit {}
+
+let unit = Unit()
+
+extension Unit: Equatable {
+    static func == (lhs: Unit, rhs: Unit) -> Bool {
+        return true
+    }
+}
+
+//extension Void { }
+
+func sum(_ xs: [Int]) -> Int {
+    var result: Int = 0
+    for x in xs {
+        result += x
+    }
+    
+    return result
+}
+
+func product(_ xs: [Int]) -> Int {
+    var result: Int = 1
+    
+    for x in xs {
+        result *= x
+    }
+    
+    return result
+}
+
+let xs = [1,2,3]
+sum(xs)
+product(xs)
+
+// Void = 1
+// A * 1 = A = 1 * A
+
+// Never = 0
+// A * 0 = 0 = 0 * A
+
+// A + 0 = A = 0 + A
+
+// A + 1 = 1 + A = A?
+
+// Either<A, Void>
+
+// Either<Pair<A, B>, Pair<A, C>>
+
+// A * B + A * C = A * (B + C)
+
+// Pair<A, Either<B, C>>
+
+// Pair<Either<A, B>, Either<A, C>>
+
+// (A + B) * (A + C)
+// A * A + A * C + B * A + B * C
+
+//URLSession.shared
+//    .dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, (any Error)?) -> Void#>)
+
+// (Data + 1) * (URLResponse + 1) * (Error + 1)
+//  = Data * URLResponse * Error
+//    + Data * URLResponse
+//    + URLResponse * Error
+//    + Data * Error
+//    + Data
+//    + URLResponse
+//    + Error
+//    + 1
+
+// Data * URLResponse + Error
+
+//Either<Pair<Data, URLResponse>, Error>
+//Result<(Data, URLResponse), Error>
+//Result<A, Never>
+//Result<A, Error>?
